@@ -14,8 +14,7 @@ from subprocess import call
 def downloadSong(url):
   video = pafy.new(url)
   best = video.getbest(preftype="mp4")
-  title = re.sub(r'\s', "", video.title)
-  title = re.sub(r'\W', "_", title)
+  title = re.sub('[\s\W]+', "_", video.title)
   best.download(quiet=False, filepath="video."+best.extension)
   call(["mplayer", "-novideo", "-nocorrect-pts", "-ao", "pcm:waveheader",  "video."+best.extension])
   call(["lame", "-h", "-b", "192", "audiodump.wav", title + ".mp3"])
