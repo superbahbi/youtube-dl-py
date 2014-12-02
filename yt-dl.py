@@ -7,18 +7,20 @@
 
 import requests
 import pafy
-import os, sys
+import os, sys, re
 from subprocess import call
 
 
 def downloadSong(url):
   video = pafy.new(url)
   best = video.getbest(preftype="mp4")
-  best.download(quiet=False)
-  call(["mplayer", "-novideo", "-nocorrect-pts", "-ao", "pcm:waveheader",  video.title + ".mp4"])
-  call(["lame", "-h", "-b", "192", "audiodump.wav", video.title + ".mp3"])
+  title = re.sub(r'\s', "", video.title)
+  title = re.sub(r'\W', "_", title)
+  best.download(quiet=False, filepath="video."+best.extension)
+  call(["mplayer", "-novideo", "-nocorrect-pts", "-ao", "pcm:waveheader",  "video."+best.extension])
+  call(["lame", "-h", "-b", "192", "audiodump.wav", title + ".mp3"])
   os.remove("audiodump.wav")
-  os.remove(video.title + ".mp4")
+  os.remove("video."+best.extension)
 
 while True:
   print "1. Download a youtube video"
