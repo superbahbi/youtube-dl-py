@@ -7,7 +7,7 @@
 
 import requests
 import pafy
-import os, sys, re
+import os, sys, re, platform
 from subprocess import call
 
 
@@ -22,6 +22,7 @@ def downloadSong(url):
   os.remove("audiodump.wav")
   os.remove("video."+best.extension)
 
+
 while True:
   print "1. Download a youtube video"
   print "2. Download a youtube playlist"
@@ -35,7 +36,14 @@ while True:
     playlistUrl = raw_input("Enter playlist url: ")
     playlist = pafy.get_playlist(playlistUrl)
     for i in range(0, len(playlist['items'])):
-      downloadSong(playlist['items'][i]['pafy'].videoid)
+      if platform.system() == 'Linux':
+        os.system('clear')
+      elif platform.system() == 'Darwin':
+        os.system('clear')
+      elif platform.system() == 'Windows':
+        os.system('cls')
+      print "{} / {} - {}".format(i+1, len(playlist['items'])+1, playlist['items'][i]['pafy'].title)
+      downloadSong(playlist['items'][i]['pafy'].videoid) 
   elif action == str(3):
     raise SystemExit()
   else:
