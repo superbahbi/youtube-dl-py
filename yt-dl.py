@@ -41,7 +41,8 @@ while True:
         os.system('clear')
       elif platform.system() == 'Windows':
         os.system('cls')
-      print "{} / {} - {}".format(i+1, len(playlist['items'])+1, playlist['items'][i]['pafy'].title)
+
+      print u"{} / {} - {}".format(i+1, len(playlist['items'])+1, playlist['items'][i]['pafy'].title)
       downloadSong(playlist['items'][i]['pafy'].videoid) 
   elif action == str(3):
     raise SystemExit()
