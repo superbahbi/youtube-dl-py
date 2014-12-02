@@ -1,4 +1,10 @@
 #!/usr/bin/env python
+#sudo apt-get install python2.7
+#sudo apt-get install mplayer
+#sudo apt-get install lame
+#pip install requests
+#pip install pafy
+
 import requests
 import pafy
 import os, sys
