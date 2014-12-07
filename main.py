@@ -1,6 +1,13 @@
 #!/usr/bin/env python
 
 import pafy, os, sys, re
+
+def mycb(total, recvd, ratio, rate, eta):
+  print(recvd, ratio, eta)
+def playlistcb(str):
+  title = re.sub('[\W]+', " ", str)
+  print u"{}".format(title)
+
 while True:
   print "1. Download a youtube video"
   print "2. Download a youtube playlist"
@@ -17,8 +24,9 @@ while True:
       print "Invalid song!"
   elif action == str(2):
     playlistUrl = raw_input("Enter playlist url: ")
-    playlist = pafy.get_playlist(playlistUrl)
+    playlist = pafy.get_playlist(playlistUrl, callback=playlistcb)
     for i in range(0, len(playlist['items'])):
+      #print playlist['items'][i]
       audio = playlist['items'][i]['pafy']  
       if audio.getbestaudio(preftype="ogg"):
         title = re.sub('[\s\W]+', "_", audio.title)
