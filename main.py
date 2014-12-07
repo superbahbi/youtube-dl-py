@@ -26,7 +26,7 @@ while True:
     playlistUrl = raw_input("Enter playlist url: ")
     playlist = pafy.get_playlist(playlistUrl, callback=playlistcb)
     for i in range(0, len(playlist['items'])):
-      #print playlist['items'][i]
+
       audio = playlist['items'][i]['pafy']  
       if audio.getbestaudio(preftype="ogg"):
         title = re.sub('[\s\W]+', "_", audio.title)
